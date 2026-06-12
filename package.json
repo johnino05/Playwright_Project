@@ -1,0 +1,21 @@
+{
+  "name": "qa-test-academy",
+  "version": "1.0.0",
+  "description": "AI-driven Playwright TypeScript test framework for qatestacademy.com",
+  "scripts": {
+    "test": "playwright test",
+    "test:auth": "playwright test --grep @auth",
+    "test:payment": "playwright test --grep @payment",
+    "test:a11y": "playwright test --grep @a11y",
+    "test:headed": "playwright test --headed",
+    "test:debug": "playwright test --debug",
+    "test:ui": "playwright test --ui",
+    "report": "playwright show-report",
+    "codegen": "playwright codegen https://qatestacademy.com"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.60.0",
+    "@types/node": "^22.0.0",
+    "typescript": "^6.0.0"
+  }
+}
