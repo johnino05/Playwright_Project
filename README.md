@@ -23,13 +23,19 @@ npx playwright test
 ## Commands
 | Command | Description |
 |---|---|
-| `npx playwright test` | Run all tests |
-| `npx playwright test --grep @auth` | Auth tests only |
-| `npx playwright test --grep @payment` | Payment tests only |
-| `npx playwright test --headed` | Watch tests run |
-| `npx playwright test --ui` | Interactive UI mode |
-| `npx playwright show-report` | Open HTML report |
-| `npx playwright codegen https://qatestacademy.com` | Record new tests |
+| `npm test` | Run all tests |
+| `npm run test:auth` | Auth tests only |
+| `npm run test:payment` | Payment tests only |
+| `npm run test:a11y` | Accessibility tests only |
+| `npm run test:smoke` | Smoke tests only |
+| `npm run test:headed` | Watch tests run |
+| `npm run test:debug` | Run Playwright in debug mode |
+| `npm run test:ui` | Interactive UI mode |
+| `npm run lint` | Run ESLint on test files |
+| `npm run lint:fix` | Auto-fix lint issues |
+| `npm run format` | Format files with Prettier |
+| `npm run report` | Open HTML report |
+| `npm run codegen` | Record new tests |
 
 ## Project structure
 ```
@@ -50,3 +56,10 @@ tests/
 ## Environment variables
 See `.env.example` for all required variables.
 Set `ANTHROPIC_API_KEY` to enable AI-powered scenario generation.
+
+## Improvements added
+- Typed configuration with `playwright.config.ts`
+- ESLint + Prettier formatting
+- Smoke test suite with `@smoke` tag
+- GitHub Actions workflow publishing HTML and JUnit reports
+- Fixture-based authenticated pages for student, instructor, and admin

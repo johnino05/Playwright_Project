@@ -7,6 +7,15 @@ type TestFixtures = {
   loginPage: LoginPage;
   checkoutPage: CheckoutPage;
   authenticatedPage: Page;
+  studentPage: Page;
+  instructorPage: Page;
+  adminPage: Page;
+};
+
+const loginAs = async (page: Page, email: string, password: string) => {
+  const login = new LoginPage(page);
+  await login.login(email, password);
+  await login.expectRedirectToDashboard();
 };
 
 export const test = base.extend<TestFixtures>({
@@ -18,11 +27,23 @@ export const test = base.extend<TestFixtures>({
     await use(new CheckoutPage(page));
   },
 
-  // Pre-authenticated page — skips login for tests that don't test auth
   authenticatedPage: async ({ page }, use) => {
-    const login = new LoginPage(page);
-    await login.login(VALID_USERS.student.email, VALID_USERS.student.password);
-    await login.expectRedirectToDashboard();
+    await loginAs(page, VALID_USERS.student.email, VALID_USERS.student.password);
+    await use(page);
+  },
+
+  studentPage: async ({ page }, use) => {
+    await loginAs(page, VALID_USERS.student.email, VALID_USERS.student.password);
+    await use(page);
+  },
+
+  instructorPage: async ({ page }, use) => {
+    await loginAs(page, VALID_USERS.instructor.email, VALID_USERS.instructor.password);
+    await use(page);
+  },
+
+  adminPage: async ({ page }, use) => {
+    await loginAs(page, VALID_USERS.admin.email, VALID_USERS.admin.password);
     await use(page);
   },
 });

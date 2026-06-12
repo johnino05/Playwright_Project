@@ -9,18 +9,22 @@ test.describe('Authentication @auth', () => {
   //   await loginPage.expectRedirectToDashboard();
   // });
 
-  // test('TC-002: invalid credentials show error without redirect', async ({ loginPage, page }) => {
-  //   await loginPage.login('wrong@email.com', 'WrongPass!');
-  //   await loginPage.expectError();
-  //   await expect(page).toHaveURL(/wp-login.php/);
-  // });
-
-    test('TC-002-1: invalid credentials show access limited error', async ({ loginPage, page }) => {
+  test('TC-002: invalid credentials show error without redirect', async ({ loginPage, page }) => {
     await loginPage.login('wrong@email.com', 'WrongPass!');
-    const accessPage = new AccessLimitPage(page);
-    await accessPage.expectAccessLimited();
+    await loginPage.expectError();
     await expect(page).toHaveURL(/wp-login.php/);
   });
+
+  test('TC-003: authenticated fixture bypasses explicit login', async ({ authenticatedPage }) => {
+    await expect(authenticatedPage).toHaveURL(/wp-admin|dashboard|my-courses/);
+  });
+
+  //   test('TC-002-1: invalid credentials show access limited error', async ({ loginPage, page }) => {
+  //   await loginPage.login('wrong@email.com', 'WrongPass!');
+  //   const accessPage = new AccessLimitPage(page);
+  //   await accessPage.expectAccessLimited();
+  //   await expect(page).toHaveURL(/wp-login.php/);
+  // });
   
 
 

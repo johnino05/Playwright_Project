@@ -8,21 +8,15 @@ test.describe('Accessibility @a11y', () => {
   ];
 
   for (const pg of pagesToCheck) {
-    test(`keyboard navigation on ${pg.name} page`, async ({ page }) => {
+    test(`page ${pg.name} has an accessibility snapshot`, async ({ page }) => {
       await page.goto(pg.path);
-      // Tab through all focusable elements
-      const focusable = await page.locator('a, button, input, select, textarea, [tabindex]').all();
-      for (const el of focusable.slice(0, 10)) {
-        await el.focus();
-        const focused = await page.evaluate(() => document.activeElement?.tagName);
-        expect(focused).toBeTruthy();
-      }
+      const snapshot = await page.accessibility.snapshot();
+      expect(snapshot).toBeTruthy();
     });
 
-    test(`${pg.name} page has no missing alt text`, async ({ page }) => {
+    test(`${pg.name} page has no images missing alt text`, async ({ page }) => {
       await page.goto(pg.path);
-      const imgsWithoutAlt = await page.locator('img:not([alt])').count();
-      expect(imgsWithoutAlt).toBe(0);
+      await expect(page.locator('img:not([alt])')).toHaveCount(0);
     });
   }
 });

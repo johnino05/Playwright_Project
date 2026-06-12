@@ -3,22 +3,14 @@
     "target": "ES2020",
     "module": "commonjs",
     "moduleResolution": "node",
-    "ignoreDeprecations": "6.0",
-    "strict": false,
+    "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
     "outDir": "./dist",
     "rootDir": "./",
     "resolveJsonModule": true,
     "forceConsistentCasingInFileNames": true,
-    "typeRoots": [
-      "/home/claude/.npm-global/lib/node_modules/@types",
-      "/home/claude/.npm-global/lib/node_modules"
-    ],
-    "paths": {
-      "playwright": ["/home/claude/.npm-global/lib/node_modules/playwright/index.d.ts"],
-      "@playwright/test": ["/home/claude/.npm-global/lib/node_modules/playwright/test.d.ts"]
-    }
+    "types": ["node", "@playwright/test"]
   },
   "include": ["tests/**/*.ts", "playwright.config.ts"],
   "exclude": ["node_modules", "dist"]

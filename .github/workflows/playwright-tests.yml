@@ -29,36 +29,40 @@ jobs:
       
       - name: Install Playwright browsers
         run: npx playwright install --with-deps
-      
-      - name: Run auth tests (login.spec.ts)
+
+      - name: Run lint
+        run: npm run lint
+
+      - name: Run auth tests
         run: npm run test:auth
-        continue-on-error: true
-      
-      - name: Run all tests
-        run: npm run test
-        continue-on-error: true
-      
-      - name: Upload test results
+
+      - name: Run smoke tests
+        run: npm run test:smoke
+
+      - name: Run full suite
+        run: npm test
+
+      - name: Upload HTML report
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: playwright-report-${{ matrix.node-version }}
           path: playwright-report/
           retention-days: 30
-      
-      - name: Upload test results directory
+
+      - name: Upload test-results
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: test-results-${{ matrix.node-version }}
           path: test-results/
           retention-days: 30
-      
-      - name: Publish test report
+
+      - name: Publish JUnit report
         if: always()
         uses: dorny/test-reporter@v1
         with:
           name: Playwright Test Results (${{ matrix.node-version }})
-          path: 'test-results/**/*.json'
-          reporter: 'jest-junit'
+          path: 'test-results/results.xml'
+          reporter: 'junit'
           fail-on-error: false
